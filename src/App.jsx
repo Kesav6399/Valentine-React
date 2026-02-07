@@ -1,5 +1,12 @@
-import { useState } from "react";
-import confetti from "canvas-confetti";
+import { useState, useEffect } from "react";
+
+// Dynamic import for confetti to avoid build issues
+let confetti = null;
+try {
+  confetti = require("canvas-confetti");
+} catch (e) {
+  console.log("Confetti module not available");
+}
 
 export default function App() {
   const [accepted, setAccepted] = useState(false);
@@ -10,7 +17,15 @@ export default function App() {
   const isSecretPage = typeof window !== "undefined" && new URL(window.location.href).searchParams.get("secret") === "true";
 
   const fireConfetti = () => {
-    confetti({ particleCount: 300, spread: 160, origin: { y: 0.6 } });
+    try {
+      if (confetti && confetti.default) {
+        confetti.default({ particleCount: 300, spread: 160, origin: { y: 0.6 } });
+      } else if (confetti) {
+        confetti({ particleCount: 300, spread: 160, origin: { y: 0.6 } });
+      }
+    } catch (e) {
+      console.log("Confetti not available");
+    }
     setAccepted(true);
   };
 
@@ -47,7 +62,7 @@ export default function App() {
           {Array.from({ length: 10 }).map((_, i) => (
             <img
               key={i}
-              src={`/photos/${(i % 52) + 1}.jpeg`}
+              src={`${import.meta.env.BASE_URL}photos/${(i % 52) + 1}.jpeg`}
               className="memory-photo"
               style={{
                 left: `${10 + (i * 8)}%`,
@@ -123,7 +138,7 @@ export default function App() {
             {Array.from({ length: 52 }).map((_, i) => (
               <img
                 key={i}
-                src={`/photos/${i + 1}.jpeg`}
+                src={`${import.meta.env.BASE_URL}photos/${i + 1}.jpeg`}
                 className="memory-photo"
                 style={{
                   left: `${Math.random() * 100}%`,
@@ -142,7 +157,7 @@ export default function App() {
           {selectedPhoto && (
             <div className="photo-modal" onClick={() => setSelectedPhoto(null)}>
               <img
-                src={`/photos/${selectedPhoto}.jpeg`}
+                src={`${import.meta.env.BASE_URL}photos/${selectedPhoto}.jpeg`}
                 className="modal-photo"
                 onClick={(e) => e.stopPropagation()}
               />
@@ -164,7 +179,7 @@ export default function App() {
             <h1>💘 Will you be mine forever Valentine?</h1>
 
             <p className="main-text">
-               <b>ASHU_MUMMY</b>, <br />I don't want perfect — <br />I want <b>you</b>. Always U ✨
+               <span style={{fontSize: '1.8rem'}}><span style={{color: '#ff69b4'}}>ASHU</span><span style={{color: '#4169e1'}}>_MUMMY</span>❤️💙</span> <br />I don't want perfect — <br />I want <b>you</b>. Always U ✨
             </p>
 
             <div className="buttons">
