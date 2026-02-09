@@ -3,7 +3,7 @@
 body {
   margin: 0;
   font-family: "Georgia", serif;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 /* BACKGROUND */
@@ -151,7 +151,7 @@ body {
   opacity: 1;
 }
 
-/* Create 8 different animation paths for photos to spread them out */
+/* Create 8 different animation paths for photos */
 .memory-photo:nth-child(1n) {
   animation: floatPath1 20s linear infinite;
 }
@@ -283,7 +283,6 @@ body {
   border: 1px solid rgba(255, 182, 193, 0.2);
 }
 
-
 /* TEXT */
 h1 {
   color: #ffd1dc;
@@ -320,17 +319,46 @@ button {
   background: linear-gradient(45deg, hotpink, deeppink);
   color: white;
   box-shadow: 0 5px 20px rgba(255, 20, 147, 0.5);
+  animation: yesButtonGlow 2s ease-in-out infinite, yesButtonPulse 1.5s ease-in-out infinite;
 }
 
 .yes:hover {
   transform: scale(1.15);
-  box-shadow: 0 8px 30px rgba(255, 20, 147, 0.8);
+  box-shadow: 0 8px 35px rgba(255, 20, 147, 0.9);
+  animation: yesButtonHover 0.3s ease forwards;
+}
+
+@keyframes yesButtonGlow {
+  0%, 100% {
+    box-shadow: 0 5px 20px rgba(255, 20, 147, 0.5);
+  }
+  50% {
+    box-shadow: 0 5px 35px rgba(255, 20, 147, 0.8), 0 0 20px rgba(255, 105, 180, 0.5);
+  }
+}
+
+@keyframes yesButtonPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+@keyframes yesButtonHover {
+  from {
+    transform: scale(1.05);
+  }
+  to {
+    transform: scale(1.15);
+  }
 }
 
 /* Extra button shown after YES */
 .extra-btn {
   margin-top: 14px;
-  padding: 10px 18px;
+  padding: 12px 24px;
   border-radius: 999px;
   background: linear-gradient(45deg,#ff9ec9,#ff5fa8);
   color: white;
@@ -338,8 +366,18 @@ button {
   border: none;
   cursor: pointer;
   box-shadow: 0 6px 18px rgba(255,80,140,0.35);
+  transition: all 0.3s ease;
+  animation: extraBtnPulse 2.5s ease-in-out infinite;
 }
-.extra-btn:hover { transform: translateY(-2px); }
+
+.extra-btn:hover { 
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 30px rgba(255,80,140,0.6);
+}
+.extra-btn:hover { 
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 30px rgba(255,80,140,0.6);
+}
 
 .extra-msg {
   margin-top: 16px;
@@ -477,7 +515,6 @@ button {
   pointer-events: auto;
 }
 
-/* INFINITE-POST removed */
 @keyframes teddyDance {
   0% {
     transform: translateX(0) translateY(0) rotate(-8deg) scale(1);
@@ -574,4 +611,832 @@ button {
   line-height: 1.7;
   font-weight: 500;
   text-shadow: 0 0 10px rgba(255, 182, 193, 0.5);
+}
+
+/* ===== MY CONFESSION BUTTON ===== */
+.confession-btn {
+  margin-top: 14px;
+  padding: 14px 32px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ff6b9d, #c44569, #8e44ad);
+  color: white;
+  font-weight: 700;
+  font-size: 1.2rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 30px rgba(255, 107, 157, 0.5);
+  animation: confessionBtnPulse 2s ease-in-out infinite;
+  transition: all 0.3s ease;
+}
+
+.confession-btn:hover {
+  transform: scale(1.08) translateY(-3px);
+  box-shadow: 0 12px 40px rgba(255, 107, 157, 0.8);
+}
+
+@keyframes confessionBtnPulse {
+  0%, 100% {
+    box-shadow: 0 8px 30px rgba(255, 107, 157, 0.5);
+  }
+  50% {
+    box-shadow: 0 8px 50px rgba(199, 125, 255, 0.8);
+  }
+}
+
+/* ===== MY CONFESSION PAGE - COMPLETE NEW PAGE ===== */
+.confession-page {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(180deg, #1a0a2e 0%, #2d1b4e 50%, #16213e 100%);
+  z-index: 3000;
+  overflow-y: auto;
+  overflow-x: hidden;
+  animation: pageSlideIn 0.8s ease;
+}
+
+.confession-page::-webkit-scrollbar {
+  width: 10px;
+}
+
+.confession-page::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.confession-page::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ff6b9d, #8e44ad);
+  border-radius: 5px;
+}
+
+@keyframes pageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Close Button */
+.confession-close-btn {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  padding: 14px 28px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 3010;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.confession-close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+  box-shadow: 0 8px 30px rgba(255, 105, 180, 0.4);
+}
+
+/* Floating Emojis Background */
+.confession-emoji-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.confession-emoji {
+  position: absolute;
+  opacity: 0.8;
+  animation: emojiFloat 20s linear infinite;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes emojiFloat {
+  0% {
+    transform: translateY(110vh) rotate(0deg) scale(0.3);
+    opacity: 0;
+  }
+  5% {
+    opacity: 0.9;
+  }
+  90% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-15vh) rotate(360deg) scale(1.3);
+    opacity: 0;
+  }
+}
+
+/* Floating Photos Background */
+.confession-photos-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.confession-photo-bg {
+  position: absolute;
+  width: 200px;
+  border-radius: 15px;
+  opacity: 0.5;
+  box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+  animation: photoFloatBg 18s linear infinite;
+}
+
+@keyframes photoFloatBg {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(0.6);
+    opacity: 0;
+  }
+  5% {
+    opacity: 0.5;
+  }
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-120vh) rotate(180deg) scale(1);
+    opacity: 0;
+  }
+}
+
+/* Main Content */
+.confession-main {
+  position: relative;
+  z-index: 5;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 120px 30px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+/* Title */
+.confession-title {
+  font-size: 3.5rem;
+  text-align: center;
+  color: #ffd1dc;
+  text-shadow: 0 0 40px rgba(255, 105, 180, 0.8), 0 0 80px rgba(255, 105, 180, 0.5);
+  margin: 0;
+  animation: titleBounce 3s ease-in-out infinite;
+}
+
+@keyframes titleBounce {
+  0%, 100% {
+    transform: scale(1);
+    text-shadow: 0 0 40px rgba(255, 105, 180, 0.8), 0 0 80px rgba(255, 105, 180, 0.5);
+  }
+  50% {
+    transform: scale(1.03);
+    text-shadow: 0 0 60px rgba(255, 105, 180, 1), 0 0 100px rgba(255, 105, 180, 0.7);
+  }
+}
+
+/* Photo Gallery */
+.confession-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  width: 100%;
+}
+
+/* Photo Card with Pop-up Animation */
+.confession-photo-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  animation: photoPopUp 1s ease forwards;
+  opacity: 0;
+}
+
+@keyframes photoPopUp {
+  0% {
+    opacity: 0;
+    transform: translateY(80px) scale(0.5) rotate(-8deg);
+  }
+  50% {
+    transform: translateY(-10px) scale(1.05) rotate(2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+}
+
+.confession-photo-img {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 25px;
+  object-fit: cover;
+  box-shadow: 0 12px 40px rgba(255, 105, 180, 0.5), 0 0 25px rgba(255, 105, 180, 0.3);
+  transition: all 0.4s ease;
+}
+
+.confession-photo-img:hover {
+  transform: scale(1.03) rotate(1deg);
+  box-shadow: 0 20px 60px rgba(255, 105, 180, 0.7), 0 0 40px rgba(255, 105, 180, 0.4);
+}
+
+.confession-caption {
+  color: #f0d4db;
+  font-size: 1.1rem;
+  text-align: center;
+  max-width: 500px;
+  line-height: 1.8;
+  font-style: italic;
+  text-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+  margin: 0;
+  padding: 15px 25px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  border-left: 4px solid rgba(255, 105, 180, 0.6);
+}
+
+/* Confession Text Card */
+.confession-text-card {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 50px 40px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(35px);
+  border-radius: 35px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4), 0 0 60px rgba(255, 105, 180, 0.25);
+  animation: cardAppear 1.2s ease forwards;
+  opacity: 0;
+  animation-delay: 0.5s;
+}
+
+@keyframes cardAppear {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.confession-text-content {
+  color: #fdf4f8;
+}
+
+.confession-line {
+  margin-bottom: 25px;
+  padding: 22px 28px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 18px;
+  border-left: 5px solid rgba(255, 105, 180, 0.7);
+  line-height: 2;
+  font-size: 1.15rem;
+  animation: lineFadeIn 0.8s ease forwards;
+  opacity: 0;
+}
+
+.confession-line:nth-child(1) { animation-delay: 0.8s; }
+.confession-line:nth-child(2) { animation-delay: 1s; }
+.confession-line:nth-child(3) { animation-delay: 1.2s; }
+.confession-line:nth-child(4) { animation-delay: 1.4s; }
+.confession-line:nth-child(5) { animation-delay: 1.6s; }
+.confession-line:nth-child(6) { animation-delay: 1.8s; }
+
+@keyframes lineFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.confession-line.highlight {
+  background: linear-gradient(135deg, rgba(255, 107, 157, 0.35), rgba(142, 68, 173, 0.25));
+  border-left-color: #ff6b9d;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding: 30px;
+  animation-delay: 2s;
+}
+
+.confession-line.telugu {
+  border-left-color: #9b59b6;
+  background: rgba(155, 89, 182, 0.1);
+  font-style: italic;
+}
+
+.confession-line.signature {
+  border-left-color: #e74c3c;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Bottom Space */
+.confession-space {
+  height: 100px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .confession-title {
+    font-size: 2.5rem;
+  }
+
+  .confession-main {
+    padding: 100px 20px 60px;
+    gap: 45px;
+  }
+
+  .confession-photo-img {
+    max-width: 100%;
+  }
+
+  .confession-caption {
+    font-size: 1rem;
+    max-width: 100%;
+    padding: 12px 18px;
+  }
+
+  .confession-text-card {
+    padding: 35px 25px;
+  }
+
+  .confession-line {
+    font-size: 1.05rem;
+    padding: 18px 22px;
+  }
+
+  .confession-line.highlight {
+    font-size: 1.3rem;
+  }
+
+  .confession-close-btn {
+    top: 20px;
+    right: 20px;
+    padding: 12px 22px;
+    font-size: 1rem;
+  }
+
+  .confession-btn {
+    padding: 12px 26px;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .confession-title {
+    font-size: 2rem;
+  }
+
+  .confession-main {
+    padding: 90px 15px 50px;
+    gap: 35px;
+  }
+
+  .confession-line {
+    font-size: 0.95rem;
+    padding: 15px 18px;
+  }
+
+  .confession-line.highlight {
+    font-size: 1.15rem;
+  }
+}
+
+/* ===== CONGRATULATIONS SECTION ===== */
+.congrats-section {
+  text-align: center;
+  padding: 40px 20px;
+  animation: congratsAppear 1s ease forwards;
+  animation-delay: 2.5s;
+  opacity: 0;
+}
+
+@keyframes congratsAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.congrats-text {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.5);
+  animation: congratsPulse 1s ease-in-out infinite;
+}
+
+@keyframes congratsPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.blast-emojis {
+  margin-top: 15px;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.blast-emojis span {
+  animation: blastPop 0.5s ease forwards;
+  opacity: 0;
+}
+
+.blast-emojis span:nth-child(1) { animation-delay: 2.7s; }
+.blast-emojis span:nth-child(2) { animation-delay: 2.8s; }
+.blast-emojis span:nth-child(3) { animation-delay: 2.9s; }
+.blast-emojis span:nth-child(4) { animation-delay: 3s; }
+.blast-emojis span:nth-child(5) { animation-delay: 3.1s; }
+.blast-emojis span:nth-child(6) { animation-delay: 3.2s; }
+.blast-emojis span:nth-child(7) { animation-delay: 3.3s; }
+.blast-emojis span:nth-child(8) { animation-delay: 3.4s; }
+
+@keyframes blastPop {
+  from {
+    opacity: 0;
+    transform: scale(0) rotate(-180deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* ===== I MISS U SECTION ===== */
+.miss-u-section {
+  text-align: center;
+  padding: 50px 20px;
+  animation: missUAppear 1s ease forwards;
+  animation-delay: 3.5s;
+  opacity: 0;
+}
+
+@keyframes missUAppear {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.miss-u-text {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #ff6b9d;
+  text-shadow: 0 0 30px rgba(255, 107, 157, 0.8), 0 0 60px rgba(255, 107, 157, 0.5);
+  animation: missUShake 0.5s ease-in-out infinite;
+  letter-spacing: 3px;
+}
+
+@keyframes missUShake {
+  0%, 100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.02) rotate(-1deg);
+  }
+  75% {
+    transform: scale(1.02) rotate(1deg);
+  }
+}
+
+.mummy-text {
+  font-size: 1.5rem;
+  color: #f0d4db;
+  margin-top: 10px;
+  font-style: italic;
+  animation: mummyPulse 1s ease-in-out infinite;
+}
+
+@keyframes mummyPulse {
+  0%, 100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.heartfelt-emojis {
+  margin-top: 20px;
+  font-size: 2.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.emoji-cry {
+  animation: cryDrop 1.5s ease-in-out infinite;
+  display: inline-block;
+}
+
+.emoji-heart {
+  animation: heartBeat 1s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes cryDrop {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(10px) rotate(5deg);
+  }
+}
+
+@keyframes heartBeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+}
+
+.emoji-cry:nth-child(odd) {
+  animation-delay: 0.3s;
+}
+
+.emoji-heart:nth-child(even) {
+  animation-delay: 0.5s;
+}
+
+/* ===== SIGNATURE SECTION ===== */
+.signature-section {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 100;
+  animation: signatureAppear 1s ease forwards;
+  animation-delay: 4.5s;
+  opacity: 0;
+}
+
+@keyframes signatureAppear {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.signature-option {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 15px 25px;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.signature-name {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #ffd1dc;
+  text-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+  letter-spacing: 2px;
+  animation: signatureGlow 2s ease-in-out infinite;
+}
+
+@keyframes signatureGlow {
+  0%, 100% {
+    text-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+  }
+  50% {
+    text-shadow: 0 0 25px rgba(255, 105, 180, 1), 0 0 40px rgba(255, 105, 180, 0.5);
+  }
+}
+
+/* Mobile responsive for new sections */
+@media (max-width: 600px) {
+  .congrats-text {
+    font-size: 1.8rem;
+  }
+
+  .miss-u-text {
+    font-size: 2rem;
+  }
+
+  .mummy-text {
+    font-size: 1.2rem;
+  }
+
+  .heartfelt-emojis {
+    font-size: 2rem;
+    gap: 12px;
+  }
+
+  .signature-section {
+    bottom: 15px;
+    right: 15px;
+  }
+
+  .signature-name {
+    font-size: 1.4rem;
+  }
+
+  .signature-option {
+    padding: 10px 18px;
+  }
+}
+
+/* ===== BOY PROPOSING GIRL ANIMATION ===== */
+.proposal-scene {
+  position: absolute;
+  top: 28%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+  pointer-events: none;
+}
+
+.boy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: boyWalk 4s ease-in-out infinite;
+}
+
+.boy-emoji {
+  font-size: 4rem;
+  filter: drop-shadow(0 0 15px rgba(255, 105, 180, 0.8));
+  animation: boyBounce 1s ease-in-out infinite;
+}
+
+.walk-hearts {
+  font-size: 1.5rem;
+  margin-top: 5px;
+  animation: walkHeartFloat 0.8s ease-in-out infinite;
+}
+
+@keyframes boyWalk {
+  0%, 100% {
+    transform: translateX(-30px);
+  }
+  50% {
+    transform: translateX(0px);
+  }
+}
+
+@keyframes boyBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes walkHeartFloat {
+  0%, 100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+.floating-hearts-proposal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: heartFly 3s ease-in-out infinite;
+}
+
+.proposal-heart {
+  font-size: 2rem;
+  animation: heartPulse 1.5s ease-in-out infinite;
+}
+
+.proposal-heart.delay-1 {
+  animation-delay: 0.5s;
+}
+
+.proposal-heart.delay-2 {
+  animation-delay: 1s;
+}
+
+@keyframes heartFly {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-15px) scale(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes heartPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+}
+
+.girl {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.girl-emoji {
+  font-size: 4rem;
+  filter: drop-shadow(0 0 15px rgba(255, 182, 193, 0.8));
+  animation: girlShy 2s ease-in-out infinite;
+}
+
+.girl-hearts {
+  font-size: 1.2rem;
+  margin-top: 8px;
+  animation: girlHeartFloat 1.2s ease-in-out infinite;
+}
+
+@keyframes girlShy {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes girlHeartFloat {
+  0%, 100% {
+    opacity: 0.6;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-5px);
+  }
+}
+
+/* Mobile responsive for proposal */
+@media (max-width: 600px) {
+  .proposal-scene {
+    gap: 40px;
+    top: 25%;
+  }
+
+  .boy-emoji,
+  .girl-emoji {
+    font-size: 3rem;
+  }
+
+  .walk-hearts {
+    font-size: 1.2rem;
+  }
+
+  .proposal-heart {
+    font-size: 1.5rem;
+  }
+
+  .girl-hearts {
+    font-size: 1rem;
+  }
 }
