@@ -12,7 +12,7 @@ try {
 function ConfessionPage({ onClose }) {
   const [showSurprise, setShowSurprise] = useState(false);
 
-  // Photo data with captions for images 52-58
+  // Photo data with captions for images 52-58 and 59-73
   const confessionPhotos = [
     { id: 52, caption: "Our freaking Telegram VC — highest vc call record manadhi… nee childhood motham describe chesav, I loved it ❤️" },
     { id: 53, caption: "The confession I wanted to tell you… but you kept me quiet." },
@@ -21,6 +21,21 @@ function ConfessionPage({ onClose }) {
     { id: 56, caption: "I always wanted to hold you like this in every trip… but unlucky 🖤" },
     { id: 57, caption: "That memorable VC — I was in a function, but my soul was in the call with you 🎧" },
     { id: 58, caption: "This time u held my Pinky finger & it was like ur saying I'm there FOR U, when I'm in Hospital...alot of promises ma 💕" },
+    { id: 59, caption: "Memory 59 - Our special moment together 💖" },
+    { id: 60, caption: "Memory 60 - Another beautiful memory 💕" },
+    { id: 61, caption: "Memory 61 - Cherishing this moment 💘" },
+    { id: 62, caption: "Memory 62 - Our unforgettable day 🌸" },
+    { id: 63, caption: "Memory 63 - Sweet memories together 💗" },
+    { id: 64, caption: "Memory 64 - Golden moments ✨" },
+    { id: 65, caption: "Memory 65 - Treasured forever 💎" },
+    { id: 66, caption: "Memory 66 - Beautiful memory 🌷" },
+    { id: 67, caption: "Memory 67 - Our special bond 💫" },
+    { id: 68, caption: "Memory 68 - Loving this memory ❤️" },
+    { id: 69, caption: "Memory 69 - Precious moments 🤍" },
+    { id: 70, caption: "Memory 70 - Amazing memories together 🥰" },
+    { id: 71, caption: "Memory 71 - Sweet memory 💝" },
+    { id: 72, caption: "Memory 72 - Wonderful memory 🎀" },
+    { id: 73, caption: "Memory 73 - Our beautiful memory 🌹" },
   ];
 
   return (
@@ -209,24 +224,29 @@ function ConfessionPage({ onClose }) {
         {/* ===== SURPRISE POPUP MODAL ===== */}
         {showSurprise && (
           <div className="surprise-overlay" onClick={() => setShowSurprise(false)}>
-            {/* Bubble Photos */}
-            {Array.from({ length: 15 }).map((_, i) => (
-              <img
-                key={`bubble-${i}`}
-                src={`${import.meta.env.BASE_URL}photos/${(i % 53) + 1}.jpeg`}
-                alt=""
-                className="bubble-photo"
-                style={{
-                  left: `${5 + Math.random() * 85}%`,
-                  top: `${5 + Math.random() * 85}%`,
-                  animationDelay: `${i * 0.3}s`,
-                  animationDuration: `${3 + Math.random() * 4}s`,
-                  width: `${60 + Math.random() * 50}px`,
-                  height: `${60 + Math.random() * 50}px`,
-                }}
-                onError={(e) => (e.target.style.display = "none")}
-              />
-            ))}
+            {/* Bubble Photos - Photos 52-58 and 59-73 */}
+            {Array.from({ length: 28 }).map((_, i) => {
+              // Photos 52-58 (7 photos) + Photos 59-73 (15 photos) = 22 photos total
+              const photoIds = [52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73];
+              const photoId = photoIds[i % photoIds.length];
+              return (
+                <img
+                  key={`bubble-${i}`}
+                  src={`${import.meta.env.BASE_URL}photos/${photoId}.jpeg`}
+                  alt=""
+                  className="bubble-photo"
+                  style={{
+                    left: `${5 + Math.random() * 85}%`,
+                    top: `${5 + Math.random() * 85}%`,
+                    animationDelay: `${i * 0.3}s`,
+                    animationDuration: `${3 + Math.random() * 4}s`,
+                    width: `${60 + Math.random() * 50}px`,
+                    height: `${60 + Math.random() * 50}px`,
+                  }}
+                  onError={(e) => (e.target.style.display = "none")}
+                />
+              );
+            })}
             {/* Sparkle particles */}
             {Array.from({ length: 25 }).map((_, i) => (
               <span
