@@ -10,6 +10,8 @@ try {
 
 // ===== MY CONFESSION PAGE - COMPLETE NEW PAGE =====
 function ConfessionPage({ onClose }) {
+  const [showSurprise, setShowSurprise] = useState(false);
+
   // Photo data with captions for images 52-58
   const confessionPhotos = [
     { id: 52, caption: "Our freaking Telegram VC — highest vc call record manadhi… nee childhood motham describe chesav, I loved it ❤️" },
@@ -193,6 +195,90 @@ function ConfessionPage({ onClose }) {
             <span className="signature-name">K-ANNA or ESAV</span>
           </div>
         </div>
+
+        {/* ===== SURPRISE MUMMY BUTTON ===== */}
+        <div className="surprise-btn-container">
+          <button className="surprise-mummy-btn" onClick={() => setShowSurprise(true)}>
+            <span className="surprise-btn-text">Surprise Mummy 💖</span>
+            <span className="surprise-btn-sparkles">
+              <span>✨</span><span>💫</span><span>🌟</span><span>⭐</span>
+            </span>
+          </button>
+        </div>
+
+        {/* ===== SURPRISE POPUP MODAL ===== */}
+        {showSurprise && (
+          <div className="surprise-overlay" onClick={() => setShowSurprise(false)}>
+            {/* Bubble Photos */}
+            {Array.from({ length: 15 }).map((_, i) => (
+              <img
+                key={`bubble-${i}`}
+                src={`${import.meta.env.BASE_URL}photos/${(i % 53) + 1}.jpeg`}
+                alt=""
+                className="bubble-photo"
+                style={{
+                  left: `${5 + Math.random() * 85}%`,
+                  top: `${5 + Math.random() * 85}%`,
+                  animationDelay: `${i * 0.3}s`,
+                  animationDuration: `${3 + Math.random() * 4}s`,
+                  width: `${60 + Math.random() * 50}px`,
+                  height: `${60 + Math.random() * 50}px`,
+                }}
+                onError={(e) => (e.target.style.display = "none")}
+              />
+            ))}
+            {/* Sparkle particles */}
+            {Array.from({ length: 25 }).map((_, i) => (
+              <span
+                key={`sparkle-${i}`}
+                className="surprise-sparkle"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  animationDelay: `${Math.random() * 5}s`,
+                  animationDuration: `${2 + Math.random() * 3}s`,
+                  fontSize: `${12 + Math.random() * 18}px`,
+                }}
+              >
+                {['💖', '💕', '✨', '💫', '🌟', '💗', '💓', '❤️'][Math.floor(Math.random() * 8)]}
+              </span>
+            ))}
+            {/* Modal Card */}
+            <div className="surprise-modal" onClick={(e) => e.stopPropagation()}>
+              <button className="surprise-close" onClick={() => setShowSurprise(false)}>✕</button>
+              <div className="surprise-content">
+                <h2 className="surprise-title">🎉💖 A Little Surprise For You 💖🎉</h2>
+                <div className="surprise-message">
+                  <p className="surprise-line fade-line" style={{animationDelay: '0.3s'}}>
+                    I got a job mummy… 🥹💼 in Vizag only. 🏙️✨<br />
+                    Startup company… name: <b>Ritefit.ai</b> anamataa. 🚀💻
+                  </p>
+                  <p className="surprise-line fade-line" style={{animationDelay: '0.8s'}}>
+                    I thought when I got this, I would sit in your lap 🤗💕,<br />
+                    take a deep breath 😮‍💨 and happily say…<br />
+                    <span className="surprise-highlight">"Mummy finally I got it…" 🥺💖🎊</span>
+                  </p>
+                  <p className="surprise-line fade-line" style={{animationDelay: '1.3s'}}>
+                    But… KANNA change aipoyadu ani telisi nappati nundi… 💔😢<br />
+                    Idk what's running in my freaking mind… 🤯😭
+                  </p>
+                  <p className="surprise-line fade-line" style={{animationDelay: '1.8s'}}>
+                    I'm waiting to buy you a gift 🎁💝 with my 1st salary… 💰✨<br />
+                    That was my dream mummy… to surprise you with something special 🥹🌹
+                  </p>
+                  <p className="surprise-line fade-line sad-line" style={{animationDelay: '2.3s'}}>
+                    But the sad reality is… hospital bills are more 🏥💸😔<br />
+                    ammamma treatment… everything piling up… 😢💔<br />
+                    Still… my heart says… first gift is for YOU mummy 🥺❤️‍🩹
+                  </p>
+                  <p className="surprise-line fade-line" style={{animationDelay: '2.8s'}}>
+                    <span className="surprise-footer">— Your K-ANNA 💜🫶 forever & always ♾️</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Bottom Space */}
         <div className="confession-space"></div>
