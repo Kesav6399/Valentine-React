@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 // Dynamic import for confetti to avoid build issues
 let confetti = null;
@@ -8,12 +8,16 @@ try {
   console.log("Confetti module not available");
 }
 
+// Global audio ref for continuous playback
+let globalAudio = null;
+let globalAudioMuted = false;
+
 // ===== MY CONFESSION PAGE - COMPLETE NEW PAGE =====
 function ConfessionPage({ onClose }) {
   const [showSurprise, setShowSurprise] = useState(false);
 
-  // Photo data with captions for images 52-58 and 59-73
-  const confessionPhotos = [
+  // Old photos (52-58) - keep original size
+  const oldPhotos = [
     { id: 52, caption: "Our freaking Telegram VC — highest vc call record manadhi… nee childhood motham describe chesav, I loved it ❤️" },
     { id: 53, caption: "The confession I wanted to tell you… but you kept me quiet." },
     { id: 54, caption: "That freaking trip made me realize I adore our BOND more than myself — my ever BEST, mummy 💞" },
@@ -21,21 +25,25 @@ function ConfessionPage({ onClose }) {
     { id: 56, caption: "I always wanted to hold you like this in every trip… but unlucky 🖤" },
     { id: 57, caption: "That memorable VC — I was in a function, but my soul was in the call with you 🎧" },
     { id: 58, caption: "This time u held my Pinky finger & it was like ur saying I'm there FOR U, when I'm in Hospital...alot of promises ma 💕" },
-    { id: 59, caption: "Memory 59 - Our special moment together 💖" },
-    { id: 60, caption: "Memory 60 - Another beautiful memory 💕" },
-    { id: 61, caption: "Memory 61 - Cherishing this moment 💘" },
-    { id: 62, caption: "Memory 62 - Our unforgettable day 🌸" },
-    { id: 63, caption: "Memory 63 - Sweet memories together 💗" },
-    { id: 64, caption: "Memory 64 - Golden moments ✨" },
-    { id: 65, caption: "Memory 65 - Treasured forever 💎" },
-    { id: 66, caption: "Memory 66 - Beautiful memory 🌷" },
-    { id: 67, caption: "Memory 67 - Our special bond 💫" },
-    { id: 68, caption: "Memory 68 - Loving this memory ❤️" },
-    { id: 69, caption: "Memory 69 - Precious moments 🤍" },
-    { id: 70, caption: "Memory 70 - Amazing memories together 🥰" },
-    { id: 71, caption: "Memory 71 - Sweet memory 💝" },
-    { id: 72, caption: "Memory 72 - Wonderful memory 🎀" },
-    { id: 73, caption: "Memory 73 - Our beautiful memory 🌹" },
+  ];
+
+  // New photos (59-73) - smaller, grid layout
+  const newPhotos = [
+    { id: 59, caption: "A Needle Task moment together 💖" },
+    { id: 60, caption: "every update in VC beautiful memory 💕" },
+    { id: 61, caption: "When i dont listen to U, the Reaction u hit ur Head 💘" },
+    { id: 62, caption: "Our 1st Train jrny IG unforgettable day 🌸" },
+    { id: 63, caption: "Testing the  Snap filters Sweet memories together 💗" },
+    { id: 64, caption: "The best VC History photo Golden moments ✨" },
+    { id: 65, caption: "The Cunning Smile, it Treasured forever 💎" },
+    { id: 66, caption: "The Unexpected Hug U gave me, Beautiful TIME 🌷" },
+    { id: 67, caption: "Our Best poses for our  special bond 💫" },
+    { id: 68, caption: "The Attitude we show eachother & Loving this Egos (U win) ❤️" },
+    { id: 69, caption: "This is our 1st Mirror photo together (we were sitting together) 🤍" },
+    { id: 70, caption: "and Holding our Hands together enjoing that Beautiful jrny 🥰" },
+    { id: 71, caption: "Our Last Trip ig jrny in Bus in Kerala...slowly Holding  hands fades but yet they r with me 💝" },
+    { id: 72, caption: "The Stamp i wanted to leave On U as a permenant memory(coz u taught me that Bite) 🎀" },
+    { id: 73, caption: "Same seat, same jrny, same Holding eachother, same photo poses(filters), but IDK but IM SURE U KNOW 🌹" },
   ];
 
   return (
@@ -64,7 +72,7 @@ function ConfessionPage({ onClose }) {
 
       {/* Floating Photos Background */}
       <div className="confession-photos-bg">
-        {confessionPhotos.map((photo, index) => (
+        {[...oldPhotos, ...newPhotos].map((photo, index) => (
           <img
             key={`bg-${photo.id}`}
             src={`${import.meta.env.BASE_URL}photos/${photo.id}.jpeg`}
@@ -89,9 +97,9 @@ function ConfessionPage({ onClose }) {
         {/* Title */}
         <h1 className="confession-title">💕 My Confession 💕</h1>
 
-        {/* Photo Gallery with Pop-up Animation */}
+        {/* Old Photos Gallery (52-58) - Original Size */}
         <div className="confession-gallery">
-          {confessionPhotos.map((photo, index) => (
+          {oldPhotos.map((photo, index) => (
             <div
               key={photo.id}
               className="confession-photo-card"
@@ -104,6 +112,25 @@ function ConfessionPage({ onClose }) {
                 onError={(e) => (e.target.style.display = "none")}
               />
               <p className="confession-caption">{photo.caption}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* New Photos Gallery (59-73) - Smaller, Grid Layout */}
+        <div className="confession-gallery-new">
+          {newPhotos.map((photo, index) => (
+            <div
+              key={photo.id}
+              className="confession-photo-card-new"
+              style={{ animationDelay: `${index * 0.3}s` }}
+            >
+              <img
+                src={`${import.meta.env.BASE_URL}photos/${photo.id}.jpeg`}
+                alt={`Memory ${photo.id}`}
+                className="confession-photo-img-new"
+                onError={(e) => (e.target.style.display = "none")}
+              />
+              <p className="confession-caption-new">{photo.caption}</p>
             </div>
           ))}
         </div>
@@ -207,7 +234,7 @@ function ConfessionPage({ onClose }) {
         {/* ===== SIGNATURE AT BOTTOM RIGHT ===== */}
         <div className="signature-section">
           <div className="signature-option">
-            <span className="signature-name">K-ANNA or ESAV</span>
+            <span className="signature-name">K-ANNA or K-ESAV</span>
           </div>
         </div>
 
@@ -316,6 +343,18 @@ export default function App() {
   const [showConfession, setShowConfession] = useState(false);
   const isSecretPage = typeof window !== "undefined" && new URL(window.location.href).searchParams.get("secret") === "true";
 
+  // Toggle mute/unmute
+  const toggleMute = () => {
+    if (audioRef.current) {
+      if (isMuted) {
+        audioRef.current.play().catch(err => console.log("Audio play error:", err));
+      } else {
+        audioRef.current.pause();
+      }
+      setIsMuted(!isMuted);
+    }
+  };
+
   const fireConfetti = () => {
     try {
       if (confetti && confetti.default) {
@@ -326,6 +365,8 @@ export default function App() {
     } catch (e) {
       console.log("Confetti not available");
     }
+    // Dispatch event to start background music
+    window.dispatchEvent(new Event('startBackgroundMusic'));
     setAccepted(true);
   };
 
